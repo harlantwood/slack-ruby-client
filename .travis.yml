@@ -25,3 +25,4 @@ git:
 env:
   - CONCURRENCY=celluloid-io
   - CONCURRENCY=faye-websocket
+
