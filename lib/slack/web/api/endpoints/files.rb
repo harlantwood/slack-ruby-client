@@ -15,7 +15,7 @@ module Slack
           # @option options [Object] :comment
           #   Text of the comment to edit.
           # @see https://api.slack.com/methods/files.comments
-          # @see https://github.com/dblock/slack-api-ref/blob/master/methods/files.comments.json
+          # @see https://github.com/dblock/slack-api-ref/blob/master/methods/files/files.comments.json
           def files_comments(options = {})
             throw ArgumentError.new('Required arguments :file missing') if options[:file].nil?
             throw ArgumentError.new('Required arguments :id missing') if options[:id].nil?
@@ -29,7 +29,7 @@ module Slack
           # @option options [file] :file
           #   ID of file to delete.
           # @see https://api.slack.com/methods/files.delete
-          # @see https://github.com/dblock/slack-api-ref/blob/master/methods/files.delete.json
+          # @see https://github.com/dblock/slack-api-ref/blob/master/methods/files/files.delete.json
           def files_delete(options = {})
             throw ArgumentError.new('Required arguments :file missing') if options[:file].nil?
             post('files.delete', options)
@@ -39,9 +39,9 @@ module Slack
           # This method returns information about a file in your team.
           #
           # @option options [file] :file
-          #   File to fetch info for.
+          #   Specify a file by providing its ID.
           # @see https://api.slack.com/methods/files.info
-          # @see https://github.com/dblock/slack-api-ref/blob/master/methods/files.info.json
+          # @see https://github.com/dblock/slack-api-ref/blob/master/methods/files/files.info.json
           def files_info(options = {})
             throw ArgumentError.new('Required arguments :file missing') if options[:file].nil?
             post('files.info', options)
@@ -73,11 +73,35 @@ module Slack
           #   You can pass multiple values in the types argument, like types=posts,snippets.The default value is all, which does not filter the list.
           #   .
           # @see https://api.slack.com/methods/files.list
-          # @see https://github.com/dblock/slack-api-ref/blob/master/methods/files.list.json
+          # @see https://github.com/dblock/slack-api-ref/blob/master/methods/files/files.list.json
           def files_list(options = {})
             options = options.merge(channel: channels_id(options)['channel']['id']) if options[:channel]
             options = options.merge(user: users_id(options)['user']['id']) if options[:user]
             post('files.list', options)
+          end
+
+          #
+          # This method disables public/external sharing for a file.
+          #
+          # @option options [file] :file
+          #   File to revoke.
+          # @see https://api.slack.com/methods/files.revokePublicURL
+          # @see https://github.com/dblock/slack-api-ref/blob/master/methods/files/files.revokePublicURL.json
+          def files_revokePublicURL(options = {})
+            throw ArgumentError.new('Required arguments :file missing') if options[:file].nil?
+            post('files.revokePublicURL', options)
+          end
+
+          #
+          # This method enables public/external sharing for a file.
+          #
+          # @option options [file] :file
+          #   File to share.
+          # @see https://api.slack.com/methods/files.sharedPublicURL
+          # @see https://github.com/dblock/slack-api-ref/blob/master/methods/files/files.sharedPublicURL.json
+          def files_sharedPublicURL(options = {})
+            throw ArgumentError.new('Required arguments :file missing') if options[:file].nil?
+            post('files.sharedPublicURL', options)
           end
 
           #
@@ -98,7 +122,7 @@ module Slack
           # @option options [Object] :channels
           #   Comma-separated list of channel names or IDs where the file will be shared.
           # @see https://api.slack.com/methods/files.upload
-          # @see https://github.com/dblock/slack-api-ref/blob/master/methods/files.upload.json
+          # @see https://github.com/dblock/slack-api-ref/blob/master/methods/files/files.upload.json
           def files_upload(options = {})
             throw ArgumentError.new('Required arguments :file missing') if options[:file].nil?
             throw ArgumentError.new('Required arguments :filename missing') if options[:filename].nil?
